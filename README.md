@@ -14,5 +14,9 @@ ALTER TABLE 'DOCUMENTS'
   ADD PRIMARY KEY ('id');
 ```
 
-2. Set up a daily cron job to delete all entries where $days_to_persist + $creation_date is older than $today.
+2. Don't forget to change credentials in php files that require connection to MySQL.
+
+3. Set up a daily cron job to delete all entries where $days_to_persist + $creation_date is older than $today.
   * Another way would be to run that query each time we create new entry but that wouldn't scale.
+
+## Note that this was a class project and is not meant for production by any means.
