@@ -6,7 +6,7 @@ $dbname = "pastify_db";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+  die("Connection failed: " . $conn->connect_error);
 }
 
 $id = (isset($_POST["id"]) ? $_POST["id"] : $_GET["id"]);
@@ -21,7 +21,7 @@ if ($content != "") {
   VALUES ('{$id}', '{$content}', '{$creation_date}')";
 
   if ($conn->query($sql) !== TRUE) {
-      echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $sql . "<br>" . $conn->error;
   }
 }
 $sql = "SELECT id, content FROM DOCUMENTS WHERE id = '{$id}'";
