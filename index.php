@@ -34,6 +34,11 @@
         <input class="form-control" id="address-input" aria-describedby="addressHelp" placeholder="wednesday-notes" name="id" required pattern="[a-zA-Z0-9]+">
         <small id="addressHelp" class="form-text text-muted">The address you'll share will look like this: <span id="user-address"></span></small>
       </div>
+      <div class="form-group">
+        <label for="days-to-persist">Life</label>
+        <input class="form-control" id="days-to-persist" aria-describedby="daysHelp" placeholder="30" value="30" name="days">
+        <small id="daysHelp" class="form-text text-muted">How many days this page should be alive?</small>
+      </div>
       <button type="submit" class="btn btn-primary">Submit</button>
       <button class="btn" id="clean-button">Clean</button>
     </form>

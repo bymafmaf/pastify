@@ -11,26 +11,30 @@ if ($conn->connect_error) {
 
 $id = (isset($_POST["id"]) ? $_POST["id"] : $_GET["id"]);
 $content = (isset($_POST["content"]) ? $_POST["content"] : "");
+$days = (isset($_POST["days"]) ? $_POST["days"] : "");
 $newUrlText = FALSE;
 // Handle submission of new content
 if ($content != "") {
   $isNewCreation = TRUE;
   $creation_date = date("Y-m-d H:i:s");
 
-  $sql = "INSERT INTO DOCUMENTS (id, content, creation_date)
-  VALUES ('{$id}', '{$content}', '{$creation_date}')";
+  $sql = "INSERT INTO DOCUMENTS (id, content, creation_date, days_to_persist)
+  VALUES ('{$id}', '{$content}', '{$creation_date}', '{$days}')";
 
   if ($conn->query($sql) !== TRUE) {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
 }
-$sql = "SELECT id, content FROM DOCUMENTS WHERE id = '{$id}'";
+$sql = "SELECT id, content, creation_date, days_to_persist FROM DOCUMENTS WHERE id = '{$id}'";
 $result = $conn->query($sql);
 if ($result->num_rows > 0) {
   $row = $result->fetch_assoc();
   $content = $row["content"];
+  $creation_date = new DateTime($row["creation_date"]);
+  $days = $row["days_to_persist"];
 }
-
+$expiringDate = $creation_date->add(new DateInterval("P${days}D"));
+$leftDays = $expiringDate->diff(new DateTime())->days;
 $url =  "{$_SERVER["REQUEST_SCHEME"]}://{$_SERVER['HTTP_HOST']}{$_SERVER["PHP_SELF"]}";
 $escaped_url = htmlspecialchars( $url, ENT_QUOTES, 'UTF-8' );
 ?>
@@ -69,6 +73,11 @@ $escaped_url = htmlspecialchars( $url, ENT_QUOTES, 'UTF-8' );
         <label for="address-input">Address</label>
         <input class="form-control" id="address-input" aria-describedby="addressHelp" placeholder="wednesday-notes" name="id" value="<? echo $id; ?>" readonly>
         <small id="addressHelp" class="form-text text-muted">The address you'll share will look like this: <span id="user-address"></span></small>
+      </div>
+      <div class="form-group">
+        <label for="days-to-persist">Life</label>
+        <input class="form-control" id="days-to-persist" aria-describedby="daysHelp" value="<? echo $leftDays; ?>" name="days" readonly>
+        <small id="daysHelp" class="form-text text-muted">Remaining uration of life for this page.</small>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
       <button class="btn" id="clean-button">Clean</button>
