@@ -31,7 +31,7 @@
       </div>
       <div class="form-group">
         <label for="address-input">Address</label>
-        <input class="form-control" id="address-input" aria-describedby="addressHelp" placeholder="wednesday-notes" name="id">
+        <input class="form-control" id="address-input" aria-describedby="addressHelp" placeholder="wednesday-notes" name="id" required pattern="[a-zA-Z0-9]+">
         <small id="addressHelp" class="form-text text-muted">The address you'll share will look like this: <span id="user-address"></span></small>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
