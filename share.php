@@ -1,3 +1,39 @@
+<?
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "pastify_db";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$id = (isset($_POST["id"]) ? $_POST["id"] : $_GET["id"]);
+$content = (isset($_POST["content"]) ? $_POST["content"] : "");
+$newUrlText = FALSE;
+// Handle submission of new content
+if ($content != "") {
+  $isNewCreation = TRUE;
+  $creation_date = date("Y-m-d H:i:s");
+
+  $sql = "INSERT INTO DOCUMENTS (id, content, creation_date)
+  VALUES ('{$id}', '{$content}', '{$creation_date}')";
+
+  if ($conn->query($sql) !== TRUE) {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+}
+$sql = "SELECT id, content FROM DOCUMENTS WHERE id = '{$id}'";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+  $row = $result->fetch_assoc();
+  $content = $row["content"];
+}
+
+$url =  "{$_SERVER["REQUEST_SCHEME"]}://{$_SERVER['HTTP_HOST']}{$_SERVER["PHP_SELF"]}";
+$escaped_url = htmlspecialchars( $url, ENT_QUOTES, 'UTF-8' );
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -27,16 +63,21 @@
     </div>
     <form action="share.php" method="post">
       <div class="form-group">
-        <textarea id="message-box" class="form-control" placeholder="Message" name="content"></textarea>
+        <textarea id="message-box" class="form-control" placeholder="Message" name="content" readonly><? echo $content; ?></textarea>
       </div>
       <div class="form-group">
         <label for="address-input">Address</label>
-        <input class="form-control" id="address-input" aria-describedby="addressHelp" placeholder="wednesday-notes" name="id">
+        <input class="form-control" id="address-input" aria-describedby="addressHelp" placeholder="wednesday-notes" name="id" value="<? echo $id; ?>" readonly>
         <small id="addressHelp" class="form-text text-muted">The address you'll share will look like this: <span id="user-address"></span></small>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
       <button class="btn" id="clean-button">Clean</button>
     </form>
+    <div class="row">
+      <div class="col-md-12">
+        <p class="lead"><? echo "You can share the following link to share this page with your friends: {$escaped_url}?id={$id}"; ?></p>
+      </div>
+    </div>
   </main>
 
   <footer class="footer">

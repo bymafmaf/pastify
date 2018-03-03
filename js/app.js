@@ -1,5 +1,5 @@
 $('#address-input').keyup(function(e) {
-  $("#user-address").html(window.location.href + $(this).val());
+  $("#user-address").html(window.location.href + "share.php?id=" + $(this).val());
 });
 $(document).ready(function() {
   $("#clean-button").click(function(){
