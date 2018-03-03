@@ -25,11 +25,18 @@
         <p class="lead">Paste whatever you need to the following box and share with your friends.</p>
       </div>
     </div>
-    <div class="form-group">
-      <textarea class="form-control" placeholder="Message"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <button class="btn">Clean</button>
+    <form>
+      <div class="form-group">
+        <textarea id="message-box" class="form-control" placeholder="Message"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="address-input">Address</label>
+        <input class="form-control" id="address-input" aria-describedby="addressHelp" placeholder="wednesday-notes">
+        <small id="addressHelp" class="form-text text-muted">The address you'll share will look like this: <span id="user-address"></span></small>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button class="btn" id="clean-button">Clean</button>
+    </form>
   </main>
 
   <footer class="footer">
@@ -37,8 +44,9 @@
       <span class="text-muted">@2018 Muvaffak Onus</span>
     </div>
   </footer>
-  <script src="js/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="js/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="js/jquery-3.2.1.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
